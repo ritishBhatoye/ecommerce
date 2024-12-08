@@ -23,4 +23,18 @@ export const categoryType = defineType({
       type: 'text',
     }),
   ],
+  preview:{
+    select:{
+        title:"name",
+        media:"image",
+        price:"price",
+    },
+    prepare(select){
+        return{
+            title:select.   title,
+            subtitle:`$${select.price}`,
+            media:select.media,
+        }
+    }
+}
 })
