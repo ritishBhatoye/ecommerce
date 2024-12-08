@@ -15,7 +15,7 @@ export const categoryType = defineType({
       name: 'slug',
       type: 'slug',
       options: {
-        source: 'title',
+        source: "title",
       },
     }),
     defineField({
@@ -25,13 +25,13 @@ export const categoryType = defineType({
   ],
   preview:{
     select:{
-        title:"name",
+        title:"title",
         media:"image",
         price:"price",
     },
     prepare(select){
         return{
-            title:select.   title,
+            title:select.title,
             subtitle:`$${select.price}`,
             media:select.media,
         }

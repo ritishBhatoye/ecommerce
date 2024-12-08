@@ -30,12 +30,12 @@ import { defineField, defineType } from "sanity";
         }),
         defineField({
             name:"validFrom",
-            type:"dateTime",
+            type:"datetime",
             title:"Valid From"
         }),
         defineField({
             name:"validUntil",
-            type:"dateTime",
+            type:"datetime",
             title:"Valid Until"
         }),
         defineField({

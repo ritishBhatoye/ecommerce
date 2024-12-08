@@ -1,5 +1,6 @@
 import { BasketIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { productType } from "./productType";
 
 export const orderType=defineType({
     name:"order",
@@ -7,8 +8,6 @@ export const orderType=defineType({
     type:"document",
     icon:BasketIcon,
     fields:[
-
-
         defineField({
             name:"orderNumber",
             title:"Order Number",
@@ -45,12 +44,6 @@ export const orderType=defineType({
             validation:(Rule)=>Rule.required().email(),
         }),
         defineField({
-            name:"stripePaymentId",
-            title:"Strange Payment Intent ID",
-            type:"string",
-            validation:(Rule)=>Rule.required(),
-        }),
-        defineField({
             name:"stripePaymentIntentId",
             title:"Stripe Payment Intent ID",
             type:"string",
@@ -68,14 +61,12 @@ export const orderType=defineType({
                             name:"product",
                             title:"Product Bought",
                             type:"reference",
-                            to:[{type:"product"}],
-
+                            to:[{type: productType.name}],
                         }),
                         defineField({
                             name:"quantity",
-                            title:"Quantity",
+                            title:"Quantity Purchased",
                             type:"number",
-
                         }),
                     ],
                     preview:{
@@ -88,75 +79,52 @@ export const orderType=defineType({
                         },
                         prepare(select){
                             return{
-                                title:`${select.product}
-                                 x ${select.quantity}`,
+                                title:`${select.product} x ${select.quantity}`,
                                 subtitle:`${select.price * select.quantity }`,
                                 media:select.image,
                             }
                         }
                     }
                 }),
-                defineField({
-                    name:"totalPrice",
-                    title:"Total Price",
-                    type:"number",
-                    validation:(Rule)=>Rule.required().min(0),
-                }),
-                defineField({
-                    name:"currency",
-                    title:"Currency",
-                    type:"string",
-                    validation:(Rule)=>Rule.required(),
-                }),
-                defineField({
-                    name:"amountDiscount",
-                    title:"Amount Discount",
-                    type:"number",
-                    validation:(Rule)=>Rule.min(0)
-
-                }),
-                defineField({
-                    name:"stauts",
-                    title:"Order Status",
-                    type:"String",
-                    options:{
-                        list:[
-                            {title:"Pending",value:"pending"},
-                            {title:"Paid",value:"paid"},
-                            {title:"Shipped",value:"shipped"},
-                            {title:"Delivered",value:"delivered"},
-                            {title:"Cancelled",value:"cancelled"},
-
-
-                        ]
-                    }
-                }),
-                defineField({
-                    name:"orderDate",
-                    title:"Order Date",
-                    type:"dateTime",
-                    validation:(Rule)=>Rule.required(),
-                })
             ],
-            // preview:{
-            //     select:{ 
-            //         name:"customerName",
-            //         amount:"totalPrice",
-            //         currency:"currency",
-            //         orderId:"orderNumber",
-            //         email:"email",
-            //     },
-            //     prepare(select){
-            //         const orderIdSnippet=`${select.orderId.slice(0,5)}...${select.orderId.slice(-5)}`;
-            //         return{
-            //             title:`${select.name} (${orderIdSnippet})`,
-            //             subtitle:`${select.amount} ${select.currency}, ${select.email}`,
-            //             media:BasketIcon,
-            //         }
-            //     }
-            // }
+        }),
+        defineField({
+            name:"totalPrice",
+            title:"Total Price",
+            type:"number",
+            validation:(Rule)=>Rule.required().min(0),
+        }),
+        defineField({
+            name:"currency",
+            title:"Currency",
+            type:"string",
+            validation:(Rule)=>Rule.required(),
+        }),
+        defineField({
+            name:"amountDiscount",
+            title:"Amount Discount",
+            type:"number",
+            validation:(Rule)=>Rule.min(0)
+        }),
+        defineField({
+            name:"status",
+            title:"Order Status",
+            type:"string",
+            options:{
+                list:[
+                    {title:"Pending",value:"pending"},
+                    {title:"Paid",value:"paid"},
+                    {title:"Shipped",value:"shipped"},
+                    {title:"Delivered",value:"delivered"},
+                    {title:"Cancelled",value:"cancelled"},
+                ]
+            }
+        }),
+        defineField({
+            name:"orderDate",
+            title:"Order Date",
+            type:"datetime",
+            validation:(Rule)=>Rule.required(),
         })
-        
     ],
-
 })
