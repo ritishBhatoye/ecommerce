@@ -64,9 +64,15 @@ body {
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .border-border {
+    border-color: hsl(var(--border));
   }
 }
